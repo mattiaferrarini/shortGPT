@@ -38,7 +38,7 @@ async function handleButtonClick(event, textarea) {
 }
 
 async function addInstructionsToPrompt(textarea) {
-    if (checkSettingsExist(settings)) {
+    if (checkActiveSettings(settings)) {
         // Add new lines at the end of the prompt, before adding the instructions
         simulateShiftEnter();
         simulateShiftEnter();
@@ -70,12 +70,12 @@ function simulateShiftEnter() {
     currentTextarea.dispatchEvent(shiftEnterEvent);
 }
 
-function checkSettingsExist(settings) {
-    return settings && (settings.maxWords || settings.maxSentences || settings.maxParagraphs);
+function checkActiveSettings(settings) {
+    return settings?.onOff && (settings.maxWords || settings.maxSentences || settings.maxParagraphs);
 }
 
 function formatSettings(settings) {
-    if (checkSettingsExist(settings)) {
+    if (checkActiveSettings(settings)) {
         let str = "";
         if (settings.maxWords >= 1)
             str += `Do not use more than ${settings.maxWords} words in your answer. `;
@@ -98,7 +98,7 @@ async function loadSettingsFromLocalStorage() {
     }
 
     const result = await new Promise((resolve) => {
-        storageAPI.local.get(['maxWords', 'maxSentences', 'maxParagraphs'], (result) => {
+        storageAPI.local.get(['maxWords', 'maxSentences', 'maxParagraphs', 'onOff'], (result) => {
             resolve(result);
         });
     });
@@ -106,7 +106,8 @@ async function loadSettingsFromLocalStorage() {
     settings = {
         maxWords: result.maxWords || 0,
         maxSentences: result.maxSentences || 0,
-        maxParagraphs: result.maxParagraphs || 0
+        maxParagraphs: result.maxParagraphs || 0,
+        onOff: result.onOff || false
     };
 }
 
@@ -141,8 +142,11 @@ bodyObserver.observe(document.body, { childList: true, subtree: true });
         settings = {
             maxWords: message.settings.maxWords || 0,
             maxSentences: message.settings.maxSentences || 0,
-            maxParagraphs: message.settings.maxParagraphs || 0
+            maxParagraphs: message.settings.maxParagraphs || 0,
+            onOff: message.settings.onOff || false
         };
+
+        console.log("Settings updated: ", settings);
     }
     return true;
 });

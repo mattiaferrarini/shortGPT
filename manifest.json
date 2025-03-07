@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "ShortGPT",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "description": "Make ChatGPT's answers shorter.",
     "permissions": [
         "activeTab",

@@ -11,7 +11,7 @@
             padding: 1em;
         }
 
-        input {
+        .num-input {
             max-width: 40%;
             text-align: center;
             border: 1px solid #ccc;
@@ -39,6 +39,36 @@
             max-width: 50%;
         }
 
+        .form-check-input {
+            width: 3em !important;
+            height: 1.25em !important;
+            background-color: #f3f3f3 !important;
+            background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='gray'/></svg>") !important;
+            outline: none !important;
+            border: 1px solid #cccccc !important;
+        }
+
+        .form-check-input:checked {
+            background-color: rgb(0, 0, 0) !important;
+            border-color: rgb(0, 0, 0) !important;
+            background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='white'/></svg>") !important;
+        }
+
+        /* For the checkboxes - make focus state match normal state */
+        .form-check-input:focus:not(:checked) {
+            background-color: #f3f3f3 !important;
+            border-color: #cccccc !important;
+            box-shadow: none !important;
+            outline: none !important;
+        }
+
+        .form-check-input:focus:checked {
+            background-color: rgb(0, 0, 0) !important;
+            border-color: rgb(0, 0, 0) !important;
+            box-shadow: none !important;
+            outline: none !important;
+        }
+
     </style>
     <link rel="stylesheet" href="../bootstrap-5.3.3-dist/css/bootstrap.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,18 +82,25 @@
 
         <div class="d-flex flex-column gap-2 my-4 pt-2 pb-1">
             <div class="d-flex flex-row justify-content-between align-items-center">
+                <label for="onOff" id="onOffText">On/Off</label>
+                <div class="form-check form-switch d-flex flex-row align-items-center justify-content-center" style="width: 40%;">
+                    <input class="form-check-input shadow-sm" type="checkbox" role="switch" aria-checked="false" id="onOff">
+                </div>
+            </div>
+            
+            <div class="d-flex flex-row justify-content-between align-items-center">
                 <label for="maxWords">Max words</label>
-                <input type="number" id="maxWords" name="maxWords" min="0" class="shadow-sm rounded-pill">
+                <input type="number" id="maxWords" name="maxWords" min="0" class="num-input shadow-sm rounded-pill">
             </div>
             
             <div class="d-flex flex-row justify-content-between align-items-center">
                 <label for="maxSentences">Max sentences</label>
-                <input type="number" id="maxSentences" name="maxSentences" min="0" class="shadow-sm rounded-pill">
+                <input type="number" id="maxSentences" name="maxSentences" min="0" class="num-input shadow-sm rounded-pill">
             </div>
             
             <div class="d-flex flex-row justify-content-between align-items-center">
                 <label for="maxParagraphs">Max paragraphs</label>
-                <input type="number" id="maxParagraphs" name="maxParagraphs" min="0" class="shadow-sm rounded-pill">
+                <input type="number" id="maxParagraphs" name="maxParagraphs" min="0" class="num-input shadow-sm rounded-pill">
             </div>
         </div>
         

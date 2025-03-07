@@ -3,10 +3,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const storageAPI = browser.storage || chrome.storage;
 
     // Pre-fill input fields with saved values
-    storageAPI.local.get(['maxWords', 'maxSentences', 'maxParagraphs'], (result) => {
+    storageAPI.local.get(['maxWords', 'maxSentences', 'maxParagraphs', 'onOff'], (result) => {
         document.getElementById('maxWords').value = result.maxWords || '';
         document.getElementById('maxSentences').value = result.maxSentences || '';
         document.getElementById('maxParagraphs').value = result.maxParagraphs || '';
+        document.getElementById('onOff').checked = result.onOff === true || result.onOff === null;
+
+        
     });
 
     form.addEventListener('submit', async (event) => {
@@ -15,12 +18,14 @@ document.addEventListener('DOMContentLoaded', () => {
         let maxWords = document.getElementById('maxWords').value;
         let maxSentences = document.getElementById('maxSentences').value;
         let maxParagraphs = document.getElementById('maxParagraphs').value;
+        let onOff = document.getElementById('onOff').checked;
 
         // Save values to local storage
         await storageAPI.local.set({
             maxWords: maxWords,
             maxSentences: maxSentences,
-            maxParagraphs: maxParagraphs
+            maxParagraphs: maxParagraphs,
+            onOff: onOff
         });
 
         // Send message to content script with updated values
@@ -34,7 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     settings: {
                         maxWords: maxWords,
                         maxSentences: maxSentences,
-                        maxParagraphs: maxParagraphs
+                        maxParagraphs: maxParagraphs,
+                        onOff: onOff
                     }
                 });
             }
